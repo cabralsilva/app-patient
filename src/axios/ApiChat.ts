@@ -1,15 +1,15 @@
 import axios, { AxiosError, AxiosInstance } from "axios";
 import qs from "qs";
-import { LS_USER_DATA, URL_LOGIN } from "../const";
 import LogoutFlow from "../flow/login/LogoutFlow";
+import { LS_USER_DATA, URL_LOGIN } from "../const";
 
 export const LOGIN_URL = "/auth";
 export const CHECK_TOKEN_URL = "/auth/valid";
 export const SEARCH_SIGNATURES_URL = "/signature";
 export const SEARCH_COMPANY_URL = "/company";
 
-const apiMain: AxiosInstance = axios.create({
-  baseURL: import.meta.env.VITE_API_URL_API_MAIN,
+const apiChat: AxiosInstance = axios.create({
+  baseURL: import.meta.env.VITE_API_URL_API_CHAT,
   headers: {
     "Content-type": "application/json",
   },
@@ -26,7 +26,7 @@ const prepareRequestParams = (options: any) => {
   return params;
 };
 
-apiMain.interceptors.request.use(
+apiChat.interceptors.request.use(
   async (config: any) => {
     config.headers = {
       Accept: "application/json",
@@ -56,7 +56,7 @@ apiMain.interceptors.request.use(
   }
 );
 
-apiMain.interceptors.response.use(
+apiChat.interceptors.response.use(
   (response) => {
     return response;
   },
@@ -79,4 +79,4 @@ const errorHandler = (error: AxiosError) => {
   return Promise.reject(error);
 };
 
-export { apiMain, prepareRequestParams };
+export { apiChat, prepareRequestParams };

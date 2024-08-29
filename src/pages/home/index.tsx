@@ -152,7 +152,7 @@ export const HomePage = () => {
   //   // }
 
   //   if (consumer?.connected) {
-  //     const destination = `/topic/chat_user_${userData.user._id}`;
+  //     const destination = `${import.meta.env.VITE_PREFIX_TOPIC_DEFAULT}${userData.user._id}`;
   //     consumer.publish({
   //       destination: destination,
   //       body: JSON.stringify(payload),
@@ -271,7 +271,7 @@ export const HomePage = () => {
   //   //   }
   //   // }, { ack: 'client' });
 
-  //   consumer.subscribe(`/topic/chat_user_${userData.user._id}`, async (payload: IMessage) => {
+  //   consumer.subscribe(`${import.meta.env.VITE_PREFIX_TOPIC_DEFAULT}${userData.user._id}`, async (payload: IMessage) => {
   //     try {
   //       const message = JSON.parse(payload.body.toString()) as IChatMessage
   //       setMessageControl((prevMessages: IMessageControl | undefined) => {
@@ -289,7 +289,7 @@ export const HomePage = () => {
   //                   receivedBy: userData.user._id,
   //                   receivedDateTime: new Date()
   //                 } as IChatMessage
-  //                 const destination = `/topic/chat_user_${userData.user._id}`; // Substitua pelo nome da sua exchange
+  //                 const destination = `${import.meta.env.VITE_PREFIX_TOPIC_DEFAULT}${userData.user._id}`; // Substitua pelo nome da sua exchange
   //                 const headers = {
   //                   'content-type': 'text/plain',
   //                 };
@@ -427,7 +427,7 @@ export const HomePage = () => {
     })
 
     if (consumer?.connected) {
-      const destination = `/exchange/chat-message`;
+      const destination = import.meta.env.VITE_EXCHANGE;
       consumer.publish({
         destination: destination,
         body: JSON.stringify(payload),
@@ -448,11 +448,11 @@ export const HomePage = () => {
 
         console.log("ASSINANDO TOPICOS")
         const newSubscribes: StompSubscription[] = []
-        console.log("subscribing", `/topic/chat_user_rk_${userData.user._id}`)
-        const sub = prevConsumer?.subscribe(`/topic/chat_user_rk_${userData.user._id}`, async (payload: IMessage) => {
+        console.log("subscribing", `${import.meta.env.VITE_PREFIX_TOPIC_DEFAULT}rk_${userData.user._id}`)
+        const sub = prevConsumer?.subscribe(`${import.meta.env.VITE_PREFIX_TOPIC_DEFAULT}rk_${userData.user._id}`, async (payload: IMessage) => {
           try {
             const message = JSON.parse(payload.body.toString()) as IChatMessage
-            console.log(`R: /topic/chat_user_rk_${userData.user._id}`, message)
+            console.log(`R: ${import.meta.env.VITE_PREFIX_TOPIC_DEFAULT}rk_${userData.user._id}`, message)
             setMessageControl((prevMC2: IMessageControl | undefined) => {
               if (!prevMC2) return prevMC2
 
@@ -477,7 +477,7 @@ export const HomePage = () => {
                         payload.receivedDateTime = new Date()
                         payload.account = userData.account
                         prevConsumer.publish({
-                          destination: `/exchange/chat-message`,
+                          destination: import.meta.env.VITE_EXCHANGE,
                           body: JSON.stringify(payload),
                         });
 
@@ -493,7 +493,7 @@ export const HomePage = () => {
                             } as unknown as IChatMessage
 
                             prevConsumer.publish({
-                              destination: `/exchange/chat-message`,
+                              destination: import.meta.env.VITE_EXCHANGE,
                               body: JSON.stringify(payloadSeen),
                             });
                           }
@@ -731,7 +731,7 @@ export const HomePage = () => {
           payload.seenDateTime = new Date()
 
           consumer.publish({
-            destination: `/exchange/chat-message`,
+            destination: import.meta.env.VITE_EXCHANGE,
             body: JSON.stringify(payload),
           });
         })

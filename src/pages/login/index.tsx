@@ -56,7 +56,7 @@ export const LoginPage = () => {
             <Col span="24">
               <Form.Item label="Código de acesso" name="username" rules={[
                 { required: true, message: 'Informe seu código de acesso!' }
-              ]} initialValue="WTA7CF">
+              ]} initialValue="WLHWD9">
                 <Input prefix={<UserOutlined />} />
               </Form.Item>
             </Col>
